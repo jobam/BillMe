@@ -48,9 +48,9 @@ namespace BillMe
                 {
                     Bill currentBill;
                     if (!this.IsFacture)
-                        currentBill = DbContext.DB.Devis.Find(x => x.Equals(this.CurrentBill));
+                        currentBill = DbContext.DB.Devis.ToList<Bill>().Find(x => x.Equals(this.CurrentBill));
                     else
-                        currentBill = DbContext.DB.Factures.Find(x => x.Equals(this.CurrentBill));
+                        currentBill = DbContext.DB.Factures.ToList<Bill>().Find(x => x.Equals(this.CurrentBill));
                     currentBill.Id = bill.Id;
                     currentBill.Date = bill.Date;
                     currentBill.Client = bill.Client;

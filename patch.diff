@@ -1,0 +1,313 @@
+diff --git a/BillMe/CreateDevisWindow.xaml.cs b/BillMe/CreateDevisWindow.xaml.cs
+index 57f6e3d..4b16e30 100644
+--- a/BillMe/CreateDevisWindow.xaml.cs
++++ b/BillMe/CreateDevisWindow.xaml.cs
+@@ -48,9 +48,9 @@ namespace BillMe
+                 {
+                     Bill currentBill;
+                     if (!this.IsFacture)
+-                        currentBill = DbContext.DB.Devis.Find(x => x.Equals(this.CurrentBill));
++                        currentBill = DbContext.DB.Devis.ToList<Bill>().Find(x => x.Equals(this.CurrentBill));
+                     else
+-                        currentBill = DbContext.DB.Factures.Find(x => x.Equals(this.CurrentBill));
++                        currentBill = DbContext.DB.Factures.ToList<Bill>().Find(x => x.Equals(this.CurrentBill));
+                     currentBill.Id = bill.Id;
+                     currentBill.Date = bill.Date;
+                     currentBill.Client = bill.Client;
+diff --git a/BillMe/MainWindow.xaml b/BillMe/MainWindow.xaml
+index c4450d8..47a031c 100644
+--- a/BillMe/MainWindow.xaml
++++ b/BillMe/MainWindow.xaml
+@@ -48,6 +48,11 @@
+             </TabItem>
+             <TabItem Header="Produits">
+                 <Grid>
++                    <Button Click="ButtonCreateProduit_OnClick" Content="Add" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75"/>
++                    <Button Content="Edit" HorizontalAlignment="Left" Margin="90,10,0,0" VerticalAlignment="Top" Width="75" Click="EditButtonDevis"/>
++                    <Button Content="Remove" HorizontalAlignment="Left" Margin="771,10,0,0" VerticalAlignment="Top" Width="75" Click="RemoveButtonProduit"/>
++                    <DataGrid Name="ProduitsGrid" HorizontalAlignment="Left" Height="351" Margin="10,45,0,0" VerticalAlignment="Top" Width="836" ItemsSource="{Binding}" IsSynchronizedWithCurrentItem="True"/>
++                    
+                 </Grid>
+             </TabItem>
+         </TabControl>
+diff --git a/BillMe/MainWindow.xaml.cs b/BillMe/MainWindow.xaml.cs
+index ab79c31..36cb4ea 100644
+--- a/BillMe/MainWindow.xaml.cs
++++ b/BillMe/MainWindow.xaml.cs
+@@ -75,6 +75,18 @@ namespace BillMe
+                     Console.WriteLine(exception.Message);
+                 }
+             }
++            else if (TabControl.SelectedIndex == 3)
++            {
++                try
++                {
++                    DataContext = DbContext.DB.Products;
++                    FactureGrid.Items.Refresh();
++                }
++                catch (Exception exception)
++                {
++                    Console.WriteLine(exception.Message);
++                }
++            }
+         }
+ 
+         private void ButtonCreateDevis_OnClick(object sender, RoutedEventArgs e)
+@@ -213,5 +225,30 @@ namespace BillMe
+                 MessageBox.Show("Erreur, les informations n'ont pas été mises à jour");
+             }
+         }
++
++        //=====================================================================
++
++        private void ButtonCreateProduit_OnClick(object sender, RoutedEventArgs e)
++        {
++
++        }
++
++        private void RemoveButtonProduit(object sender, RoutedEventArgs e)
++        {
++            var selectedProduit = ProduitsGrid.SelectedItem as Product;
++            if (selectedProduit == null)
++            {
++                MessageBox.Show("Sélectionnez un Produit à supprimer");
++            }
++            else
++            {
++                if (MessageBox.Show("Confirmez-vous la Suppression ?", "Confirmation", MessageBoxButton.OKCancel) ==
++                    MessageBoxResult.OK)
++                {
++                    DbContext.DB.Products.Remove(selectedProduit);
++                    DbContext.Save();
++                }
++            }
++        }
+     }
+ }
+diff --git a/BillMe/Models/Db.cs b/BillMe/Models/Db.cs
+index 0b87594..52e748b 100644
+--- a/BillMe/Models/Db.cs
++++ b/BillMe/Models/Db.cs
+@@ -1,5 +1,6 @@
+ ﻿using System;
+ using System.Collections.Generic;
++using System.Collections.ObjectModel;
+ using System.ComponentModel;
+ using System.Linq;
+ using System.Text;
+@@ -9,11 +10,11 @@ namespace BillMe.Models
+ {
+     public class Db : INotifyPropertyChanged
+     {
+-        private List<Bill> devis;
+-        private List<Bill> factures;
+-        private List<Product> products;
++        private ObservableCollection<Bill> devis;
++        private ObservableCollection<Bill> factures;
++        private ObservableCollection<Product> products;
+         private Enterprise enterprise;
+-        public List<Bill> Devis
++        public ObservableCollection<Bill> Devis
+         {
+             get { return this.devis; }
+             set
+@@ -23,7 +24,7 @@ namespace BillMe.Models
+             }
+         }
+ 
+-        public List<Bill> Factures
++        public ObservableCollection<Bill> Factures
+         {
+             get { return this.factures; }
+             set
+@@ -33,7 +34,7 @@ namespace BillMe.Models
+             }
+         }
+ 
+-        public List<Product> Products
++        public ObservableCollection<Product> Products
+         {
+             get { return this.products; }
+             set
+diff --git a/BillMe/Models/DbContext.cs b/BillMe/Models/DbContext.cs
+index 3584dfb..bbfa1b9 100644
+--- a/BillMe/Models/DbContext.cs
++++ b/BillMe/Models/DbContext.cs
+@@ -1,5 +1,6 @@
+ ﻿using System;
+ using System.Collections.Generic;
++using System.Collections.ObjectModel;
+ using System.IO;
+ using System.Linq;
+ using System.Runtime.CompilerServices;
+@@ -54,9 +55,9 @@ namespace BillMe.Models
+         public static void Initialize()
+         {
+             DB = new Db();
+-            DB.Devis = new List<Bill>();
++            DB.Devis = new ObservableCollection<Bill>();
+             DB.Enterprise = new Enterprise();
+-            DB.Factures = new List<Bill>();
++            DB.Factures = new ObservableCollection<Bill>();
+         }
+     }
+ }
+diff --git a/BillMe/obj/Debug/BillMe.csproj.FileListAbsolute.txt b/BillMe/obj/Debug/BillMe.csproj.FileListAbsolute.txt
+index 96547e7..2a0e743 100644
+--- a/BillMe/obj/Debug/BillMe.csproj.FileListAbsolute.txt
++++ b/BillMe/obj/Debug/BillMe.csproj.FileListAbsolute.txt
+@@ -25,3 +25,30 @@ C:\Users\Jonathan\Documents\Visual Studio 2015\Projects\BillMe\BillMe\BillMe\obj
+ C:\Users\Jonathan\Documents\Visual Studio 2015\Projects\BillMe\BillMe\BillMe\obj\Debug\BillMe.csproj.GenerateResource.Cache
+ C:\Users\Jonathan\Documents\Visual Studio 2015\Projects\BillMe\BillMe\BillMe\obj\Debug\BillMe.exe
+ C:\Users\Jonathan\Documents\Visual Studio 2015\Projects\BillMe\BillMe\BillMe\obj\Debug\BillMe.pdb
++C:\Users\Jonathan\Documents\projets\BillMe\BillMe\bin\Debug\BillMe.exe.config
++C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\BillMe.exe
++C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\BillMe.pdb
++C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\BillMe.csprojResolveAssemblyReference.cache
++C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\CreateDevisWindow.baml
++C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\MainWindow.baml
++C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\CreateDevisWindow.g.cs
++C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\MainWindow.g.cs
++C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\App.g.cs
++C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\BillMe_Content.g.cs
++C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\BillMe_MarkupCompile.cache
++C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\BillMe.g.resources
++C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\BillMe.Properties.Resources.resources
++C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\BillMe.csproj.GenerateResource.Cache
++C:\Users\Jonathan\Documents\projets\BillMe\BillMe\bin\Debug\libeay32.dll
++C:\Users\Jonathan\Documents\projets\BillMe\BillMe\bin\Debug\libgcc_s_dw2-1.dll
++C:\Users\Jonathan\Documents\projets\BillMe\BillMe\bin\Debug\mingwm10.dll
++C:\Users\Jonathan\Documents\projets\BillMe\BillMe\bin\Debug\ssleay32.dll
++C:\Users\Jonathan\Documents\projets\BillMe\BillMe\bin\Debug\wkhtmltox0.dll
++C:\Users\Jonathan\Documents\projets\BillMe\BillMe\bin\Debug\BillMe.exe
++C:\Users\Jonathan\Documents\projets\BillMe\BillMe\bin\Debug\BillMe.pdb
++C:\Users\Jonathan\Documents\projets\BillMe\BillMe\bin\Debug\Common.Logging.dll
++C:\Users\Jonathan\Documents\projets\BillMe\BillMe\bin\Debug\itextsharp.dll
++C:\Users\Jonathan\Documents\projets\BillMe\BillMe\bin\Debug\Pechkin.dll
++C:\Users\Jonathan\Documents\projets\BillMe\BillMe\bin\Debug\Common.Logging.pdb
++C:\Users\Jonathan\Documents\projets\BillMe\BillMe\bin\Debug\Common.Logging.xml
++C:\Users\Jonathan\Documents\projets\BillMe\BillMe\bin\Debug\itextsharp.xml
+diff --git a/BillMe/obj/Debug/BillMe.g.resources b/BillMe/obj/Debug/BillMe.g.resources
+index 7fb3f0c..b0a6786 100644
+Binary files a/BillMe/obj/Debug/BillMe.g.resources and b/BillMe/obj/Debug/BillMe.g.resources differ
+diff --git a/BillMe/obj/Debug/MainWindow.baml b/BillMe/obj/Debug/MainWindow.baml
+index c169d72..2a5fcae 100644
+Binary files a/BillMe/obj/Debug/MainWindow.baml and b/BillMe/obj/Debug/MainWindow.baml differ
+diff --git a/BillMe/obj/Debug/MainWindow.g.cs b/BillMe/obj/Debug/MainWindow.g.cs
+index 6748ced..7845d1c 100644
+--- a/BillMe/obj/Debug/MainWindow.g.cs
++++ b/BillMe/obj/Debug/MainWindow.g.cs
+@@ -1,4 +1,4 @@
+-﻿#pragma checksum "..\..\MainWindow.xaml" "{406ea660-64cf-4c82-b6f0-42d48172a799}" "321492E4E539FD0AA54B1CB35706DEE5"
++﻿#pragma checksum "..\..\MainWindow.xaml" "{406ea660-64cf-4c82-b6f0-42d48172a799}" "75602790B2D3E438722DFF72ED26C722"
+ //------------------------------------------------------------------------------
+ // <auto-generated>
+ //     This code was generated by a tool.
+@@ -103,6 +103,14 @@ namespace BillMe {
+         #line default
+         #line hidden
+         
++        
++        #line 54 "..\..\MainWindow.xaml"
++        [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
++        internal System.Windows.Controls.DataGrid ProduitsGrid;
++        
++        #line default
++        #line hidden
++        
+         private bool _contentLoaded;
+         
+         /// <summary>
+@@ -235,6 +243,33 @@ namespace BillMe {
+             #line default
+             #line hidden
+             return;
++            case 18:
++            
++            #line 51 "..\..\MainWindow.xaml"
++            ((System.Windows.Controls.Button)(target)).Click += new System.Windows.RoutedEventHandler(this.ButtonCreateProduit_OnClick);
++            
++            #line default
++            #line hidden
++            return;
++            case 19:
++            
++            #line 52 "..\..\MainWindow.xaml"
++            ((System.Windows.Controls.Button)(target)).Click += new System.Windows.RoutedEventHandler(this.EditButtonDevis);
++            
++            #line default
++            #line hidden
++            return;
++            case 20:
++            
++            #line 53 "..\..\MainWindow.xaml"
++            ((System.Windows.Controls.Button)(target)).Click += new System.Windows.RoutedEventHandler(this.RemoveButtonProduit);
++            
++            #line default
++            #line hidden
++            return;
++            case 21:
++            this.ProduitsGrid = ((System.Windows.Controls.DataGrid)(target));
++            return;
+             }
+             this._contentLoaded = true;
+         }
+diff --git a/BillMe/obj/Debug/MainWindow.g.i.cs b/BillMe/obj/Debug/MainWindow.g.i.cs
+index 6748ced..7845d1c 100644
+--- a/BillMe/obj/Debug/MainWindow.g.i.cs
++++ b/BillMe/obj/Debug/MainWindow.g.i.cs
+@@ -1,4 +1,4 @@
+-﻿#pragma checksum "..\..\MainWindow.xaml" "{406ea660-64cf-4c82-b6f0-42d48172a799}" "321492E4E539FD0AA54B1CB35706DEE5"
++﻿#pragma checksum "..\..\MainWindow.xaml" "{406ea660-64cf-4c82-b6f0-42d48172a799}" "75602790B2D3E438722DFF72ED26C722"
+ //------------------------------------------------------------------------------
+ // <auto-generated>
+ //     This code was generated by a tool.
+@@ -103,6 +103,14 @@ namespace BillMe {
+         #line default
+         #line hidden
+         
++        
++        #line 54 "..\..\MainWindow.xaml"
++        [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
++        internal System.Windows.Controls.DataGrid ProduitsGrid;
++        
++        #line default
++        #line hidden
++        
+         private bool _contentLoaded;
+         
+         /// <summary>
+@@ -235,6 +243,33 @@ namespace BillMe {
+             #line default
+             #line hidden
+             return;
++            case 18:
++            
++            #line 51 "..\..\MainWindow.xaml"
++            ((System.Windows.Controls.Button)(target)).Click += new System.Windows.RoutedEventHandler(this.ButtonCreateProduit_OnClick);
++            
++            #line default
++            #line hidden
++            return;
++            case 19:
++            
++            #line 52 "..\..\MainWindow.xaml"
++            ((System.Windows.Controls.Button)(target)).Click += new System.Windows.RoutedEventHandler(this.EditButtonDevis);
++            
++            #line default
++            #line hidden
++            return;
++            case 20:
++            
++            #line 53 "..\..\MainWindow.xaml"
++            ((System.Windows.Controls.Button)(target)).Click += new System.Windows.RoutedEventHandler(this.RemoveButtonProduit);
++            
++            #line default
++            #line hidden
++            return;
++            case 21:
++            this.ProduitsGrid = ((System.Windows.Controls.DataGrid)(target));
++            return;
+             }
+             this._contentLoaded = true;
+         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -54,9 +55,9 @@ namespace BillMe.Models
         public static void Initialize()
         {
             DB = new Db();
-            DB.Devis = new List<Bill>();
+            DB.Devis = new ObservableCollection<Bill>();
             DB.Enterprise = new Enterprise();
-            DB.Factures = new List<Bill>();
+            DB.Factures = new ObservableCollection<Bill>();
         }
     }
 }

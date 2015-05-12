@@ -25,3 +25,30 @@ C:\Users\Jonathan\Documents\Visual Studio 2015\Projects\BillMe\BillMe\BillMe\obj
 C:\Users\Jonathan\Documents\Visual Studio 2015\Projects\BillMe\BillMe\BillMe\obj\Debug\BillMe.csproj.GenerateResource.Cache
 C:\Users\Jonathan\Documents\Visual Studio 2015\Projects\BillMe\BillMe\BillMe\obj\Debug\BillMe.exe
 C:\Users\Jonathan\Documents\Visual Studio 2015\Projects\BillMe\BillMe\BillMe\obj\Debug\BillMe.pdb
+C:\Users\Jonathan\Documents\projets\BillMe\BillMe\bin\Debug\BillMe.exe.config
+C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\BillMe.exe
+C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\BillMe.pdb
+C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\BillMe.csprojResolveAssemblyReference.cache
+C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\CreateDevisWindow.baml
+C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\MainWindow.baml
+C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\CreateDevisWindow.g.cs
+C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\MainWindow.g.cs
+C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\App.g.cs
+C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\BillMe_Content.g.cs
+C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\BillMe_MarkupCompile.cache
+C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\BillMe.g.resources
+C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\BillMe.Properties.Resources.resources
+C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\BillMe.csproj.GenerateResource.Cache
+C:\Users\Jonathan\Documents\projets\BillMe\BillMe\bin\Debug\libeay32.dll
+C:\Users\Jonathan\Documents\projets\BillMe\BillMe\bin\Debug\libgcc_s_dw2-1.dll
+C:\Users\Jonathan\Documents\projets\BillMe\BillMe\bin\Debug\mingwm10.dll
+C:\Users\Jonathan\Documents\projets\BillMe\BillMe\bin\Debug\ssleay32.dll
+C:\Users\Jonathan\Documents\projets\BillMe\BillMe\bin\Debug\wkhtmltox0.dll
+C:\Users\Jonathan\Documents\projets\BillMe\BillMe\bin\Debug\BillMe.exe
+C:\Users\Jonathan\Documents\projets\BillMe\BillMe\bin\Debug\BillMe.pdb
+C:\Users\Jonathan\Documents\projets\BillMe\BillMe\bin\Debug\Common.Logging.dll
+C:\Users\Jonathan\Documents\projets\BillMe\BillMe\bin\Debug\itextsharp.dll
+C:\Users\Jonathan\Documents\projets\BillMe\BillMe\bin\Debug\Pechkin.dll
+C:\Users\Jonathan\Documents\projets\BillMe\BillMe\bin\Debug\Common.Logging.pdb
+C:\Users\Jonathan\Documents\projets\BillMe\BillMe\bin\Debug\Common.Logging.xml
+C:\Users\Jonathan\Documents\projets\BillMe\BillMe\bin\Debug\itextsharp.xml

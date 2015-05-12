@@ -75,6 +75,18 @@ namespace BillMe
                     Console.WriteLine(exception.Message);
                 }
             }
+            else if (TabControl.SelectedIndex == 3)
+            {
+                try
+                {
+                    DataContext = DbContext.DB.Products;
+                    FactureGrid.Items.Refresh();
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine(exception.Message);
+                }
+            }
         }
 
         private void ButtonCreateDevis_OnClick(object sender, RoutedEventArgs e)
@@ -211,6 +223,31 @@ namespace BillMe
             catch (Exception)
             {
                 MessageBox.Show("Erreur, les informations n'ont pas été mises à jour");
+            }
+        }
+
+        //=====================================================================
+
+        private void ButtonCreateProduit_OnClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void RemoveButtonProduit(object sender, RoutedEventArgs e)
+        {
+            var selectedProduit = ProduitsGrid.SelectedItem as Product;
+            if (selectedProduit == null)
+            {
+                MessageBox.Show("Sélectionnez un Produit à supprimer");
+            }
+            else
+            {
+                if (MessageBox.Show("Confirmez-vous la Suppression ?", "Confirmation", MessageBoxButton.OKCancel) ==
+                    MessageBoxResult.OK)
+                {
+                    DbContext.DB.Products.Remove(selectedProduit);
+                    DbContext.Save();
+                }
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -9,11 +10,11 @@ namespace BillMe.Models
 {
     public class Db : INotifyPropertyChanged
     {
-        private List<Bill> devis;
-        private List<Bill> factures;
-        private List<Product> products;
+        private ObservableCollection<Bill> devis;
+        private ObservableCollection<Bill> factures;
+        private ObservableCollection<Product> products;
         private Enterprise enterprise;
-        public List<Bill> Devis
+        public ObservableCollection<Bill> Devis
         {
             get { return this.devis; }
             set
@@ -23,7 +24,7 @@ namespace BillMe.Models
             }
         }
 
-        public List<Bill> Factures
+        public ObservableCollection<Bill> Factures
         {
             get { return this.factures; }
             set
@@ -33,7 +34,7 @@ namespace BillMe.Models
             }
         }
 
-        public List<Product> Products
+        public ObservableCollection<Product> Products
         {
             get { return this.products; }
             set
