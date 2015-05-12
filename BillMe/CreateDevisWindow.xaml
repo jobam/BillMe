@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Créer un Devis / une Facture" Height="407.415" Width="766.078" Background="AliceBlue">
     <Grid Margin="0,0,4.8,0.4">
-        <Label Content="Devis N°: " HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Label Content="N°: " HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <TextBox  Name ="IdDevis" HorizontalAlignment="Left" Height="23" Margin="76,10,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="69"/>
         <Label Content="Date:" HorizontalAlignment="Left" Margin="212,10,0,0" VerticalAlignment="Top"/>
         <DatePicker Name="Date" HorizontalAlignment="Left" Margin="255,10,0,0" VerticalAlignment="Top"/>

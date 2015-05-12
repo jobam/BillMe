@@ -58,6 +58,7 @@ namespace BillMe.Models
             DB.Devis = new ObservableCollection<Bill>();
             DB.Enterprise = new Enterprise();
             DB.Factures = new ObservableCollection<Bill>();
+            DB.Products = new ObservableCollection<Product>();
         }
     }
 }

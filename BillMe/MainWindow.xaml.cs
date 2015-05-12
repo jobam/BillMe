@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 using BillMe.Models;
 using Microsoft.Win32;
 using MessageBox = System.Windows.MessageBox;
+using System.ComponentModel;
 
 namespace BillMe
 {
@@ -94,6 +95,7 @@ namespace BillMe
             var window2 = new CreateDevisWindow();
             window2.IdDevis.Text = "42";
             window2.Show();
+            window2.Closing += refreshItems;
         }
 
         private void EditButtonDevis(object sender, RoutedEventArgs e)
@@ -111,6 +113,7 @@ namespace BillMe
             editWindow.IsEdit = true;
 
             editWindow.Show();
+            editWindow.Closing += refreshItems;
         }
 
 
@@ -151,6 +154,7 @@ namespace BillMe
             var window2 = new CreateDevisWindow{IsFacture = true};
             window2.IdDevis.Text = "42";
             window2.Show();
+            window2.Closing += refreshItems;
         }
 
         private void EditButtonFacture(object sender, RoutedEventArgs e)
@@ -168,6 +172,7 @@ namespace BillMe
             editWindow.IsEdit = true;
 
             editWindow.Show();
+            editWindow.Closing += refreshItems;
         }
 
 
@@ -230,9 +235,27 @@ namespace BillMe
 
         private void ButtonCreateProduit_OnClick(object sender, RoutedEventArgs e)
         {
-
+            var productWindow = new CreateProductWindow();
+            productWindow.Show();
+            productWindow.Closing += refreshItems;
         }
 
+        public void refreshItems(object sender, CancelEventArgs e)
+        {
+            if (TabControl.SelectedIndex == 1)
+            {
+                DevisGrid.Items.Refresh();
+            }
+            if (TabControl.SelectedIndex == 2)
+            {
+                FactureGrid.Items.Refresh();
+            }
+            if (TabControl.SelectedIndex == 3)
+            {
+                ProduitsGrid.Items.Refresh();
+            }
+
+        }
         private void RemoveButtonProduit(object sender, RoutedEventArgs e)
         {
             var selectedProduit = ProduitsGrid.SelectedItem as Product;
@@ -249,6 +272,23 @@ namespace BillMe
                     DbContext.Save();
                 }
             }
+        }
+
+        private void EditButtonProduit(object sender, RoutedEventArgs e)
+        {
+            var editWindow = new CreateProductWindow();
+            var selectedProduct = DevisGrid.SelectedItem as Product ?? new Product();
+
+            editWindow.CurrentProduct = selectedProduct;
+
+            editWindow.IdDevis.Text = selectedProduct.Code;
+            editWindow.Name.Text = selectedProduct.Name;
+            editWindow.Prix.Text = selectedProduct.Price.ToString();
+            editWindow.Qte.Text = selectedProduct.Quantity.ToString();
+            editWindow.IsEdit = true;
+
+            editWindow.Show();
+            editWindow.Closing += refreshItems;
         }
     }
 }

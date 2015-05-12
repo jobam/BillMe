@@ -29,10 +29,6 @@ C:\Users\Jonathan\Documents\projets\BillMe\BillMe\bin\Debug\BillMe.exe.config
 C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\BillMe.exe
 C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\BillMe.pdb
 C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\BillMe.csprojResolveAssemblyReference.cache
-C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\CreateDevisWindow.baml
-C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\MainWindow.baml
-C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\CreateDevisWindow.g.cs
-C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\MainWindow.g.cs
 C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\App.g.cs
 C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\BillMe_Content.g.cs
 C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\BillMe_MarkupCompile.cache
@@ -52,3 +48,9 @@ C:\Users\Jonathan\Documents\projets\BillMe\BillMe\bin\Debug\Pechkin.dll
 C:\Users\Jonathan\Documents\projets\BillMe\BillMe\bin\Debug\Common.Logging.pdb
 C:\Users\Jonathan\Documents\projets\BillMe\BillMe\bin\Debug\Common.Logging.xml
 C:\Users\Jonathan\Documents\projets\BillMe\BillMe\bin\Debug\itextsharp.xml
+C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\CreateProductWindow.baml
+C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\CreateDevisWindow.baml
+C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\CreateProductWindow.g.cs
+C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\CreateDevisWindow.g.cs
+C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\MainWindow.baml
+C:\Users\Jonathan\Documents\projets\BillMe\BillMe\obj\Debug\MainWindow.g.cs

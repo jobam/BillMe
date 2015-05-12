@@ -49,7 +49,7 @@
             <TabItem Header="Produits">
                 <Grid>
                     <Button Click="ButtonCreateProduit_OnClick" Content="Add" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75"/>
-                    <Button Content="Edit" HorizontalAlignment="Left" Margin="90,10,0,0" VerticalAlignment="Top" Width="75" Click="EditButtonDevis"/>
+                    <Button Content="Edit" HorizontalAlignment="Left" Margin="90,10,0,0" VerticalAlignment="Top" Width="75" Click="EditButtonProduit"/>
                     <Button Content="Remove" HorizontalAlignment="Left" Margin="771,10,0,0" VerticalAlignment="Top" Width="75" Click="RemoveButtonProduit"/>
                     <DataGrid Name="ProduitsGrid" HorizontalAlignment="Left" Height="351" Margin="10,45,0,0" VerticalAlignment="Top" Width="836" ItemsSource="{Binding}" IsSynchronizedWithCurrentItem="True"/>
                     
