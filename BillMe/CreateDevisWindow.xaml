@@ -1,22 +1,32 @@
-﻿<Window x:Class="BillMe.CreateDevisWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Créer un Devis / une Facture" Height="407.415" Width="766.078" Background="AliceBlue">
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="BillMe.CreateDevisWindow"
+        Title="Créer un Devis / une Facture" Height="407.415" Width="855.411" Background="AliceBlue">
+    <Window.Resources>
+        <ControlTemplate x:Key="ListBoxControlTemplate1" TargetType="{x:Type ListBox}">
+            <TextBlock x:Name="textBlock" Margin="0,0,-18.866,-2.866" TextWrapping="Wrap" Text="{Binding Name}" d:IsLocked="True"/>
+        </ControlTemplate>
+    </Window.Resources>
     <Grid Margin="0,0,4.8,0.4">
         <Label Content="N°: " HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <TextBox  Name ="IdDevis" HorizontalAlignment="Left" Height="23" Margin="76,10,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="69"/>
-        <Label Content="Date:" HorizontalAlignment="Left" Margin="212,10,0,0" VerticalAlignment="Top"/>
-        <DatePicker Name="Date" HorizontalAlignment="Left" Margin="255,10,0,0" VerticalAlignment="Top"/>
+        <TextBox  x:Name ="IdDevis" HorizontalAlignment="Left" Height="23" Margin="76,10,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="69"/>
+        <Label Content="Date:" HorizontalAlignment="Left" Margin="158.536,7.04,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.901,0.549"/>
+        <DatePicker x:Name="Date" HorizontalAlignment="Left" Margin="200.999,11,0,0" VerticalAlignment="Top"/>
         <Label Content="Client:" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top"/>
-        <TextBox Name="Client" HorizontalAlignment="Left" Height="23" Margin="76,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="Client" HorizontalAlignment="Left" Height="23" Margin="76,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Label Content="Tel:" HorizontalAlignment="Left" Margin="212,60,0,0" VerticalAlignment="Top"/>
-        <TextBox Name ="Tel" HorizontalAlignment="Left" Height="23" Margin="247,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110"/>
+        <TextBox x:Name ="Tel" HorizontalAlignment="Left" Height="23" Margin="247,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110"/>
         <Label Content="Mail:" HorizontalAlignment="Left" Margin="10,103,0,0" VerticalAlignment="Top"/>
-        <TextBox Name ="Mail" HorizontalAlignment="Left" Height="23" Margin="76,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="221"/>
+        <TextBox x:Name ="Mail" HorizontalAlignment="Left" Height="23" Margin="76,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="221"/>
         <Label Content="Adresse:" HorizontalAlignment="Left" Margin="10,158,0,0" VerticalAlignment="Top"/>
-        <TextBox Name="Adress" HorizontalAlignment="Left" Height="92" Margin="76,184,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="221"/>
-        <DataGrid Name="Products" HorizontalAlignment="Left" Height="320" Margin="371,41,0,0" VerticalAlignment="Top" Width="365"/>
-        <Label Content="Produits:" HorizontalAlignment="Left" Margin="371,10,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="Adress" HorizontalAlignment="Left" Height="92" Margin="76,184,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="221"/>
+        <DataGrid ItemsSource="{Binding}" x:Name="Products" HorizontalAlignment="Left" Height="320" Margin="371,41,0,0" VerticalAlignment="Top" Width="365"/>
+        <Label Content="Produits:" HorizontalAlignment="Left" Margin="383,9,0,0" VerticalAlignment="Top" RenderTransformOrigin="3.3,0.873"/>
         <Button Content="Valider" HorizontalAlignment="Left" Margin="121,303,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        <Button x:Name="AddButton" Content="Add" HorizontalAlignment="Left" Margin="661,12,0,0" VerticalAlignment="Top" Width="75" Click="AddButton_Click"/>
+        <ComboBox x:Name="produitsList" HorizontalAlignment="Left" Margin="445,12,0,0" VerticalAlignment="Top" Width="211" ItemsSource="{Binding}" DisplayMemberPath="Name"/>
+        <Button Click="Remove_Click" x:Name="Remove" Content="Remove" HorizontalAlignment="Left" Margin="750,12,0,0" VerticalAlignment="Top" Width="75"/>
+
     </Grid>
 </Window>

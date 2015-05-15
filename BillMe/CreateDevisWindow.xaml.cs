@@ -27,8 +27,8 @@ namespace BillMe
         public CreateDevisWindow()
         {
             InitializeComponent();
+            produitsList.DataContext = DbContext.DB.Products;
         }
-
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -71,6 +71,40 @@ namespace BillMe
             catch (System.FormatException)
             {
                 MessageBox.Show("Veuillez entrer un Numéro de Devis / Facture sous forme de nombre");
+            }
+        }
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            var produit = produitsList.SelectedItem as Product;
+
+            if (produit != null)
+            {
+                Bill currentBill;
+                if (!this.IsFacture)
+                    currentBill = DbContext.DB.Devis.ToList<Bill>().Find(x => x.Equals(this.CurrentBill)) ?? new Bill();
+                else
+                    currentBill = DbContext.DB.Factures.ToList<Bill>().Find(x => x.Equals(this.CurrentBill)) ?? new Bill();
+                if (currentBill.Products == null)
+                {
+                    currentBill.Products = new List<Product>();
+                    this.CurrentBill.Products = currentBill.Products;
+                    Products.DataContext = this.CurrentBill.Products;
+                }
+                currentBill.Products.Add(produit);
+                Products.Items.Refresh();
+            }
+
+        }
+
+        private void Remove_Click(object sender, RoutedEventArgs e)
+        {
+            var selected = Products.SelectedItem as Product;
+
+            if (selected != null)
+            {
+                this.CurrentBill.Products.Remove(selected);
+                Products.Items.Refresh();
             }
         }
     }

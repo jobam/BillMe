@@ -35,6 +35,8 @@
                     <Button Content="Remove" HorizontalAlignment="Left" Margin="771,10,0,0" VerticalAlignment="Top" Width="75" Click="RemoveButtonDevis"/>
                     <DataGrid Name="DevisGrid" HorizontalAlignment="Left" Height="351" Margin="10,45,0,0" VerticalAlignment="Top" Width="836" ItemsSource="{Binding}" IsSynchronizedWithCurrentItem="True"/>
                     <Button Content="Print" HorizontalAlignment="Left" Margin="170,10,0,0" VerticalAlignment="Top" Width="75" Click="PrintButtonDevis"/>
+                    <Button Click="Convert_Click" x:Name="Convert" Content="Convert to Facture" HorizontalAlignment="Left" Margin="369,10,0,0" VerticalAlignment="Top" Width="108"/>
+
                 </Grid>
             </TabItem>
             <TabItem Header="Factures">

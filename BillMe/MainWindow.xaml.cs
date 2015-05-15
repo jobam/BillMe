@@ -100,8 +100,12 @@ namespace BillMe
 
         private void EditButtonDevis(object sender, RoutedEventArgs e)
         {
-            var editWindow = new CreateDevisWindow();
             var selectedDevis = DevisGrid.SelectedItem as Bill ?? new Bill();
+            var editWindow = new CreateDevisWindow() {
+                CurrentBill = selectedDevis
+            };
+            editWindow.CurrentBill = editWindow.CurrentBill ?? new Bill();
+            editWindow.DataContext = editWindow.CurrentBill.Products ?? new List<Product>();
 
             editWindow.IdDevis.Text = selectedDevis.Id.ToString();
             editWindow.Mail.Text = selectedDevis.Mail;
@@ -109,7 +113,6 @@ namespace BillMe
             editWindow.Date.Text = selectedDevis.Date;
             editWindow.Client.Text = selectedDevis.Client;
             editWindow.Adress.Text = selectedDevis.Address;
-            editWindow.CurrentBill = selectedDevis;
             editWindow.IsEdit = true;
 
             editWindow.Show();
@@ -159,8 +162,9 @@ namespace BillMe
 
         private void EditButtonFacture(object sender, RoutedEventArgs e)
         {
-            var editWindow = new CreateDevisWindow{IsFacture = true};
             var selectedDevis = DevisGrid.SelectedItem as Bill ?? new Bill();
+            var editWindow = new CreateDevisWindow{IsFacture = true,
+            CurrentBill = selectedDevis};
 
             editWindow.IdDevis.Text = selectedDevis.Id.ToString();
             editWindow.Mail.Text = selectedDevis.Mail;
@@ -168,7 +172,6 @@ namespace BillMe
             editWindow.Date.Text = selectedDevis.Date;
             editWindow.Client.Text = selectedDevis.Client;
             editWindow.Adress.Text = selectedDevis.Address;
-            editWindow.CurrentBill = selectedDevis;
             editWindow.IsEdit = true;
 
             editWindow.Show();
@@ -289,6 +292,25 @@ namespace BillMe
 
             editWindow.Show();
             editWindow.Closing += refreshItems;
+        }
+
+        private void Convert_Click(object sender, RoutedEventArgs e)
+        {
+            var bill = DevisGrid.SelectedItem as Bill;
+            if (bill != null)
+            {
+                var copy = new Bill
+                {
+                    Address = bill.Address,
+                    Client = bill.Client,
+                    Date = bill.Date,
+                    Telephone = bill.Telephone,
+                    Products = bill.Products,
+                    Mail = bill.Mail
+                };
+                DbContext.DB.Factures.Add(copy);
+                MessageBox.Show("done !");
+            }
         }
     }
 }
